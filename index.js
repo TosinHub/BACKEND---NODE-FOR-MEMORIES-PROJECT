@@ -9,11 +9,13 @@ const app = expresss();
 app.use(cors());
 
 
-app.use('/posts', postRoutes)
+
 
 app.use(bodyParser.json({limit : "30mb", extended: true}))
 app.use(bodyParser.urlencoded({limit : "30mb", extended: true}))
 
+
+app.use('/posts', postRoutes)
 
 
 const connection_url = "mongodb+srv://citademy:citademy123@cluster0.ekdw7.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
