@@ -1,4 +1,5 @@
 import PostMessage from "../models/postMessage.js"
+import mongoose from 'mongoose'
 
 export const getPosts = async (req,res) =>{
     try {
@@ -12,7 +13,7 @@ export const getPosts = async (req,res) =>{
 }
 
 export const createPost = async (req, res) =>{
-    const post = req.body;
+    const post = req.body; 
 
   
 
@@ -36,6 +37,41 @@ export const updatePost = async (req, res) =>{
   
         if(!mongoose.Types.ObjectId.isValid(_id)) return res.status(404).send('No post with that id')
     
-        const updatedPost = PostMessage.findByIdAndUpdate(_id, post, {new: true})
-        res.json(updatePost)
+        const updatedPost = await PostMessage.findByIdAndUpdate(_id, {...post, _id}, {new: true})
+       
+        res.json(updatedPost)
 }
+
+export const deletePost = async (req, res) =>{
+    const {id} = req.params;  
+
+
+  
+        if(!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send('No post with that id')
+         await PostMessage.findByIdAndRemove(id)
+       
+        res.json({Message : "Post Successfully Deleted"})
+}
+
+export const likePost = async (req, res) =>{
+    const {id} = req.params;  
+
+
+  
+        if(!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send('No post with that id')
+         
+        const post = await PostMessage.findById(id)
+
+        const updatedPost = await PostMessage.findByIdAndUpdate(_id, {likeCount: post.likeCount + 1}, {new: true})
+       
+        res.json(updatedPost)
+}
+
+
+
+
+//overwhelming because a lot of resources out there.
+//be careful of the hype
+//let it be one step at a time.
+//job: optimizing your trainees. let them put themselves out there, technical roles and non technical roles.
+
