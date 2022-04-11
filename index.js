@@ -3,12 +3,12 @@ import bodyParser  from 'body-parser'
 import mongoose from 'mongoose'
 import cors from 'cors'
 import postRoutes from './routes/posts.js'
-//import dotenv from 'dotenv'
+import dotenv from 'dotenv'
 
 
 const app = expresss();
 app.use(cors());
-//dotenv.config()
+dotenv.config()
 
 
 
