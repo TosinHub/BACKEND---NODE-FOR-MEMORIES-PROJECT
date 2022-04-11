@@ -3,11 +3,12 @@ import bodyParser  from 'body-parser'
 import mongoose from 'mongoose'
 import cors from 'cors'
 import postRoutes from './routes/posts.js'
+//import dotenv from 'dotenv'
 
 
 const app = expresss();
 app.use(cors());
-
+//dotenv.config()
 
 
 
@@ -18,11 +19,10 @@ app.use(bodyParser.urlencoded({limit : "30mb", extended: true}))
 app.use('/posts', postRoutes)
 
 
-const connection_url = "mongodb+srv://citademy:citademy123@cluster0.ekdw7.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
 
 const PORT = process.env.PORT || 5000;
 
-mongoose.connect(connection_url, {useNewUrlParser: true, useUnifiedTopology:true})
+mongoose.connect(process.env.CONNECTION_UTL, {useNewUrlParser: true, useUnifiedTopology:true})
             .then(() => app.listen(PORT , () => console.log(`Server listening on port: ${PORT}`)))
             .catch((error)=> console.log(error))
 
